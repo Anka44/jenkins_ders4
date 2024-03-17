@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        // Kimlik bilgilerini ortam değişkenlerine atayarak kullanın
+        MY_SECRET = credentials('eedc3cc9-f541-4afb-b95a-ef65cd5aae7d')
+        
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -18,15 +24,13 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'eedc3cc9-f541-4afb-b95a-ef65cd5aae7d', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    echo 'Deploying with secured credentials...'
-                    sh '''
-                    echo 'Deploying as $USERNAME $PASSWORD'
-                    # Use $USERNAME and $PASSWORD in your deploy commands
-                    # For example, to log in to a server:
-                    #sshpass -p $PASSWORD ssh $USERNAME@yourserver.com "deploy-command"
-                    '''
-                }
+                echo 'Deploying...'
+                sh '''
+                # Use the credentials securely
+                echo "Deploying using ${env.MY_SECRET} user"
+                # Insert deployment commands here
+                # For example, using credentials to authenticate against a server
+                '''
             }
         }
     }

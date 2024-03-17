@@ -1,18 +1,11 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'GREETING', defaultValue: 'Hello', description: 'Greeting message')
-        booleanParam(name: 'DEPLOY', defaultValue: true, description: 'Deploy to production?')
-        choice(name: 'ENVIRONMENT', choices: ['staging', 'production'], description: 'Deployment environment')
-        text(name: 'DEPLOYMENT_NOTES', defaultValue: '', description: 'Notes for the deployment')
-        password(name: 'SECRET', description: 'A secret password')
-    }
 
     stages {
-        stage('Initialization') {
+        stage('Checkout') {
             steps {
-                echo "Greeting: ${params.GREETING}"
-                echo "Environment: ${params.ENVIRONMENT}"
+                echo 'Checking out code...'
+                // Checkout commands go here
             }
         }
 
@@ -24,15 +17,16 @@ pipeline {
         }
 
         stage('Deploy') {
-            when {
-                expression {
-                    return params.DEPLOY && params.ENVIRONMENT == 'production'
-                }
-            }
             steps {
-                echo "Deploying to ${params.ENVIRONMENT}..."
-                echo "Deployment notes: ${params.DEPLOYMENT_NOTES}"
-                // Deployment commands go here
+                withCredentials([usernamePassword(credentialsId: 'my-deploy-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    echo 'Deploying with secured credentials...'
+                    sh '''
+                    echo "Deploying as $USERNAME"
+                    # Use $USERNAME and $PASSWORD in your deploy commands
+                    # For example, to log in to a server:
+                    sshpass -p $PASSWORD ssh $USERNAME@yourserver.com "deploy-command"
+                    '''
+                }
             }
         }
     }

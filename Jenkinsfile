@@ -2,10 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('Build') {
             steps {
-                echo 'Hello World'
-                echo 'Hello Kerim'
+                echo 'Building...'
+                // Buraya build komutlarınızı ekleyin
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                // Buraya test komutlarınızı ekleyin
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Buraya deploy komutlarınızı ekleyin
             }
         }
     }

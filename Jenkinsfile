@@ -18,7 +18,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'my-deploy-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'eedc3cc9-f541-4afb-b95a-ef65cd5aae7d', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     echo 'Deploying with secured credentials...'
                     sh '''
                     echo "Deploying as $USERNAME"

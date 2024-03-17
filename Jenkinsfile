@@ -1,36 +1,36 @@
 pipeline {
     agent any
 
-    environment {
-        // Kimlik bilgilerini ortam değişkenlerine atayarak kullanın
-        MY_SECRET = credentials('eedc3cc9-f541-4afb-b95a-ef65cd5aae7d')
-        
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                echo 'Checking out code...'
-                // Checkout commands go here
+                echo 'Starting build process...'
+                // Basit komutlar
             }
         }
 
-        stage('Build') {
+        stage('Test') {
             steps {
-                echo 'Building...'
-                // Build commands go here
+                script {
+                    // script bloğu içinde karmaşık mantık
+                    def testsToRun = ['unit', 'integration', 'e2e']
+                    for (testType in testsToRun) {
+                        echo "Running ${testType} tests"
+                        // Test türüne göre koşullu mantık uygulama
+                        if (testType == 'e2e') {
+                            echo 'Setting up Selenium Grid for e2e tests'
+                            // Selenium Grid kurulum komutları
+                        }
+                        // Testleri çalıştırma komutları
+                    }
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
-                sh '''
-                # Use the credentials securely
-                echo "Deploying using ${env.MY_SECRET} user"
-                # Insert deployment commands here
-                # For example, using credentials to authenticate against a server
-                '''
+                echo 'Deploying application...'
+                // Dağıtım komutları
             }
         }
     }

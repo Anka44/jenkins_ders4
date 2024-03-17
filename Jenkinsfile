@@ -24,7 +24,7 @@ pipeline {
                     echo 'Deploying as $USERNAME $PASSWORD'
                     # Use $USERNAME and $PASSWORD in your deploy commands
                     # For example, to log in to a server:
-                    sshpass -p $PASSWORD ssh $USERNAME@yourserver.com "deploy-command"
+                    #sshpass -p $PASSWORD ssh $USERNAME@yourserver.com "deploy-command"
                     '''
                 }
             }

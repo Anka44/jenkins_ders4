@@ -1,14 +1,7 @@
-// script.groovy
-def runTests() {
-    def testsToRun = ['unit', 'integration', 'e2e']
-    for (testType in testsToRun) {
-        echo "Running ${testType} tests"
-        if (testType == 'e2e') {
-            echo 'Setting up Selenium Grid for e2e tests'
-            // Selenium Grid kurulum komutları
-        }
-        // Testleri çalıştırma komutları
-    }
+def buildAndPushImage(String profile, String dockerHubRepo, String version, int buildNumber) {
+    def mavenProfile = profile ? "-P${profile}" : ""
+    def imageTag = "${dockerHubRepo}:${version}-${buildNumber}"
+    sh "./mvnw package ${mavenProfile}  jib:build -Djib.to.image=${imageTag} -DskipTests"
 }
 
 return this
